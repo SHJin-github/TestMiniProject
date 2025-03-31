@@ -11,6 +11,15 @@ spring:
     username: admin
     password: test_db1234
     driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      poolName: Hikari
+      maximum-pool-size: 10
+      minimum-idle: 10
+
+# HikariPool에 대한 로깅을 수행함
+logging:
+  level:
+    com.zaxxer.hikari.pool.HikariPool: debug
 
 mybatis:
   mapper-locations: mapper/**/*.xml
@@ -18,8 +27,3 @@ mybatis:
     default-statement-timeout: 30 #DB 응답에 대한 타임아웃
     map-underscore-to-camel-case: true
 
-logging:
-  level:
-    root: "warn"
-    org.springframework.web: "debug"
-    org.hibernate: "error"
