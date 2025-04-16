@@ -33,4 +33,8 @@ public class TestRequstService {
         testRequstMapper.delete(testNo);
     }
 
+    public void accept(String testNo) {
+        testRequstMapper.accept(testNo);
+    }
+
 }

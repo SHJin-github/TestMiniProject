@@ -3,7 +3,12 @@
 <mapper namespace="com.example.testminiproject.mapper.TestRequestMapper">
 
     <select id="findAll" resultType="com.example.testminiproject.vo.TestVo">
-
+        SELECT
+            TEST_NO
+            , USER_ID
+            , TITLE
+            , CONTENT
+        FROM TEST_REQUEST
     </select>
 
     <select id="findByTestNo" parameterType="com.example.testminiproject.vo.TestVo" resultType="com.example.testminiproject.vo.TestVo">
@@ -19,6 +24,10 @@
     </update>
 
     <update id="delete">
+
+    </update>
+
+    <update id="accept">
 
     </update>
 

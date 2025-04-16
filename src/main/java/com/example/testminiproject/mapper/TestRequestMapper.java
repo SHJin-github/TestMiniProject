@@ -13,4 +13,5 @@ public interface TestRequestMapper {
     void insert(TestVo testVo);
     void update(TestVo testVo);
     void delete(String testNo);
+    void accept(String testNo);
 }

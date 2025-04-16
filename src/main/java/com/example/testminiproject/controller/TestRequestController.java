@@ -40,9 +40,9 @@ public class TestRequestController {
         testRequstService.delete(testNo);
     }
 
-
-
-
-
+    @PostMapping("/{testNo}/accept")
+    public void accept(@PathVariable("testNo") String testNo) {
+        testRequstService.accept(testNo);
+    }
 
 }
