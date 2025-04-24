@@ -5,30 +5,57 @@
     <select id="findAll" resultType="com.example.testminiproject.vo.TestVo">
         SELECT
             TEST_NO
-            , USER_ID
             , TITLE
             , CONTENT
+            , NVL(MODIFY_USER_ID,CREATE_USER_ID)
+            , NVL(MODIFY_DATE,CREATE_DATE)
         FROM TEST_REQUEST
     </select>
 
     <select id="findByTestNo" parameterType="com.example.testminiproject.vo.TestVo" resultType="com.example.testminiproject.vo.TestVo">
-
+        SELECT
+            TEST_NO
+             , TITLE
+             , CONTENT
+             , NVL(MODIFY_USER_ID,CREATE_USER_ID)
+             , NVL(MODIFY_DATE,CREATE_DATE)
+        FROM TEST_REQUEST
+        WHERE TEST_NO = #{testNo}
     </select>
 
     <insert id="insert">
-
+        INSERT INTO TEST_REQUEST(
+            TEST_NO
+            , TITLE
+            , CONTENT
+            , CREATE_DATE
+            , CREATE_USER_ID
+        ) VALUES (
+            #{seq_test_no.nextval}
+            , #{title}
+            , #{content}
+            , SYSDATE
+            , #{userId}
+         )
     </insert>
 
     <update id="update">
-
+        UPDATE TEST_REQUEST SET
+          TITLE              = #{title}
+          , CONTENT          = #{content}
+          , MODIFY_DATE      = SYSDATE
+          , MODIFY_USER_ID   = #{userId}
+        WHERE TEST_NO = #{testNo}
     </update>
 
     <update id="delete">
-
+        UPDATE TEST_REQUEST SET
+            DELETE_YN = #{deleteYn}
+        WHERE TEST_NO = #{testNo}
     </update>
 
-    <update id="accept">
-
+    <update id="receipt">
+        
     </update>
 
 </mapper>

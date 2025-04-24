@@ -5,12 +5,14 @@ import lombok.Data;
 @Data
 public class TestVo {
 
-    String testNo;
-    String title;
-    String state;
-    String date;
-    String userId;
-    String content;
-    String deleteYn;
+    private String testNo;
+    private String title;
+    private String content;
+    private String createDate;
+    private String createUserId;
+    private String modifyDate;
+    private String modifyUserId;
+    private String state;
+    private String deleteYn;
 
 }
