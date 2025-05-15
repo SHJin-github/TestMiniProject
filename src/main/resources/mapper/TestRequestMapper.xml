@@ -25,15 +25,13 @@
 
     <insert id="insertRequest" parameterType="com.example.testminiproject.req.vo.TestVo">
         INSERT INTO TEST_REQUEST(
-            TEST_NO
-            , TITLE
+            TITLE
             , CONTENT
             , CREATE_DATE
             , CREATE_USER_ID
             , STATUS
         ) VALUES (
-            #{seq_test_no.nextval}
-            , #{title}
+            #{title}
             , #{content}
             , SYSDATE
             , #{userId}
