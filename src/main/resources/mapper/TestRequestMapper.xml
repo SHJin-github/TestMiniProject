@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.testminiproject.mapper.TestRequestMapper">
+<mapper namespace="com.example.testminiproject.req.mapper.TestRequestMapper">
 
-    <select id="findAll" resultType="com.example.testminiproject.vo.TestVo">
+    <select id="findAllRequests" resultType="com.example.testminiproject.req.vo.TestVo">
         SELECT
             TEST_NO
             , TITLE
@@ -12,7 +12,7 @@
         FROM TEST_REQUEST
     </select>
 
-    <select id="findByTestNo" parameterType="com.example.testminiproject.vo.TestVo" resultType="com.example.testminiproject.vo.TestVo">
+    <select id="findByTestNo" parameterType="com.example.testminiproject.req.vo.TestVo" resultType="com.example.testminiproject.req.vo.TestVo">
         SELECT
             TEST_NO
              , TITLE
@@ -23,23 +23,25 @@
         WHERE TEST_NO = #{testNo}
     </select>
 
-    <insert id="insert">
+    <insert id="insertRequest" parameterType="com.example.testminiproject.req.vo.TestVo">
         INSERT INTO TEST_REQUEST(
             TEST_NO
             , TITLE
             , CONTENT
             , CREATE_DATE
             , CREATE_USER_ID
+            , STATUS
         ) VALUES (
             #{seq_test_no.nextval}
             , #{title}
             , #{content}
             , SYSDATE
             , #{userId}
+            , #{status}
          )
     </insert>
 
-    <update id="update">
+    <update id="updateRequest" parameterType="com.example.testminiproject.req.vo.TestVo">
         UPDATE TEST_REQUEST SET
           TITLE              = #{title}
           , CONTENT          = #{content}
@@ -48,14 +50,20 @@
         WHERE TEST_NO = #{testNo}
     </update>
 
-    <update id="delete">
+    <update id="deleteRequest" parameterType="String">
         UPDATE TEST_REQUEST SET
             DELETE_YN = #{deleteYn}
+          , DELETE_DATE      = SYSDATE
+          , DELETE_USER_ID   = #{userId}
         WHERE TEST_NO = #{testNo}
     </update>
 
-    <update id="receipt">
-        
+    <update id="updateRequestStatus" parameterType="com.example.testminiproject.req.vo.TestVo">
+        UPDATE TEST_REQUEST SET
+            STATUS = #{status}
+          , MODIFY_DATE      = SYSDATE
+          , MODIFY_USER_ID   = #{userId}
+        WHERE TEST_NO = #{testNo}
     </update>
 
 </mapper>

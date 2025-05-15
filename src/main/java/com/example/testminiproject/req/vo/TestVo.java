@@ -1,4 +1,4 @@
-package com.example.testminiproject.vo;
+package com.example.testminiproject.req.vo;
 
 import lombok.Data;
 
@@ -12,7 +12,9 @@ public class TestVo {
     private String createUserId;
     private String modifyDate;
     private String modifyUserId;
-    private String state;
     private String deleteYn;
+    private String deleteUserId;
+    private String deleteDate;
+    private String status;
 
 }

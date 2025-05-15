@@ -1,4 +1,4 @@
-package com.example.testminiproject.vo;
+package com.example.testminiproject.req.vo;
 
 import lombok.Data;
 
