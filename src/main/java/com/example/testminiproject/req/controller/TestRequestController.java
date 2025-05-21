@@ -14,7 +14,7 @@ public class TestRequestController {
     private TestRequestService testRequestServiceImpl;
 
     @Autowired
-    public void TestRequestServiceImpl(TestRequestService testRequestServiceImpl) {
+    public void TestRequestController(TestRequestService testRequestServiceImpl) {
         this.testRequestServiceImpl = testRequestServiceImpl;
     }
 
