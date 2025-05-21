@@ -10,7 +10,7 @@ public interface TestRequestService {
     TestVo getByTestNo(String testNo);
     void createRequest(TestVo testVo);
     void updateRequest(TestVo testVo);
-    void deleteRequest(String testNo);
+    void deleteRequest(TestVo testVo);
     void updateRequestStatus(TestVo testVo);
 
 }

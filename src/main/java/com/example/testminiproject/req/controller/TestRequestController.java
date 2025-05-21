@@ -39,8 +39,8 @@ public class TestRequestController {
     }
 
     @DeleteMapping("/{testNo}")
-    public void deleteRequest(@PathVariable("testNo") String testNo) {
-        testRequestServiceImpl.deleteRequest(testNo);
+    public void deleteRequest(@RequestBody TestVo testVo) {
+        testRequestServiceImpl.deleteRequest(testVo);
     }
 
     @PutMapping("/{testNo}/status")

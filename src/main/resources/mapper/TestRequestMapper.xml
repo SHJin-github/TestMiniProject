@@ -34,7 +34,7 @@
             #{title}
             , #{content}
             , SYSDATE
-            , #{userId}
+            , #{createUserId}
             , #{status}
          )
     </insert>
@@ -44,15 +44,15 @@
           TITLE              = #{title}
           , CONTENT          = #{content}
           , MODIFY_DATE      = SYSDATE
-          , MODIFY_USER_ID   = #{userId}
+          , MODIFY_USER_ID   = #{modifyUserId}
         WHERE TEST_NO = #{testNo}
     </update>
 
-    <update id="deleteRequest" parameterType="String">
+    <update id="deleteRequest" parameterType="com.example.testminiproject.req.vo.TestVo">
         UPDATE TEST_REQUEST SET
             DELETE_YN = #{deleteYn}
           , DELETE_DATE      = SYSDATE
-          , DELETE_USER_ID   = #{userId}
+          , DELETE_USER_ID   = #{deleteUserId}
         WHERE TEST_NO = #{testNo}
     </update>
 
@@ -60,7 +60,7 @@
         UPDATE TEST_REQUEST SET
             STATUS = #{status}
           , MODIFY_DATE      = SYSDATE
-          , MODIFY_USER_ID   = #{userId}
+          , MODIFY_USER_ID   = #{modifyUserId}
         WHERE TEST_NO = #{testNo}
     </update>
 

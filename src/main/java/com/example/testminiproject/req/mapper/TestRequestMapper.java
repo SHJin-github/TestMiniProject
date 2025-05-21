@@ -12,6 +12,6 @@ public interface TestRequestMapper {
     TestVo findByTestNo(String testNo);
     void insertRequest(TestVo testVo);
     void updateRequest(TestVo testVo);
-    void deleteRequest(String testNo);
+    void deleteRequest(TestVo testVo);
     void updateRequestStatus(TestVo testVo);
 }
