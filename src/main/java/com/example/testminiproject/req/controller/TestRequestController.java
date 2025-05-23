@@ -2,7 +2,6 @@ package com.example.testminiproject.req.controller;
 
 import com.example.testminiproject.req.service.TestRequestService;
 import com.example.testminiproject.req.vo.TestVo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,10 +10,9 @@ import java.util.List;
 @RequestMapping("/requests")
 public class TestRequestController {
 
-    private TestRequestService testRequestServiceImpl;
+    private final TestRequestService testRequestServiceImpl;
 
-    @Autowired
-    public void TestRequestController(TestRequestService testRequestServiceImpl) {
+    public TestRequestController(TestRequestService testRequestServiceImpl) {
         this.testRequestServiceImpl = testRequestServiceImpl;
     }
 

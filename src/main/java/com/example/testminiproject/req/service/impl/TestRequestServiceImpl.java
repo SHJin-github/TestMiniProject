@@ -5,7 +5,6 @@ import com.example.testminiproject.req.mapper.TestRequestMapper;
 import com.example.testminiproject.req.service.TestRequestService;
 import com.example.testminiproject.req.vo.TestVo;
 import com.example.testminiproject.util.GetUserSession;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,9 +12,8 @@ import java.util.List;
 @Service
 public class TestRequestServiceImpl implements TestRequestService {
 
-    private TestRequestMapper testRequestMapper;
+    private final TestRequestMapper testRequestMapper;
 
-    @Autowired
     public TestRequestServiceImpl(TestRequestMapper testRequestMapper) {
         this.testRequestMapper = testRequestMapper;
     }
