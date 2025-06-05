@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.testminiproject.rec.mapper.TestReceiptMapper">
+
+    <insert id="insertReceipt" parameterType="com.example.testminiproject.rec.dto.TestReceiptDto">
+        <selectKey keyProperty="receiptNo" resultType="String" order="BEFORE">
+            SELECT TO_CHAR(RECEIPT_SEQ.NEXTVAL) FROM dual
+        </selectKey>
+        INSERT INTO TEST_RECEIPT(
+        RECEIPT_NO
+        , TEST_NO
+        , TITLE
+        , CONTENT
+        , REQ_RMRK
+        , REC_DATE
+        , REC_ID
+        , CREATE_DATE
+        , CREATE_USER_ID
+        , STATUS
+        ) VALUES (
+        #{receiptNo}
+        , #{testNo}
+        , #{title}
+        , #{content}
+        , #{reqRmrk}
+        , SYSDATE
+        , #{recId}
+        , SYSDATE
+        , #{createUserId}
+        , #{status}
+        )
+    </insert>
+
+
+</mapper>

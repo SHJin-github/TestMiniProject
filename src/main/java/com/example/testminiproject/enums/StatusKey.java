@@ -1,21 +1,18 @@
 package com.example.testminiproject.enums;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Getter
+@AllArgsConstructor
 public enum StatusKey {
 
     REQUEST("의뢰"),
+    UPDATE("수정"),
+    DELETE("삭제"),
     RECEIPT("접수"),
     ;
 
-    private String value;
-
-    StatusKey(String state) {
-        this.value = state;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-
+    private final String value;
 
 }

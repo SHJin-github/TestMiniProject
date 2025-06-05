@@ -1,7 +1,7 @@
 package com.example.testminiproject.req.controller;
 
 import com.example.testminiproject.req.service.TestRequestService;
-import com.example.testminiproject.req.vo.TestVo;
+import com.example.testminiproject.req.dto.TestRequestDto;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,33 +17,38 @@ public class TestRequestController {
     }
 
     @GetMapping
-    public List<TestVo> getAllRequests() {
-        return testRequestServiceImpl.getAllRequests();
+    public List<TestRequestDto> getAllRequests(@RequestBody TestRequestDto testRequestDto) {
+        return testRequestServiceImpl.getAllRequests(testRequestDto);
     }
 
     @GetMapping("/{testNo}")
-    public TestVo get(@PathVariable("testNo") String testNo) {
-        return testRequestServiceImpl.getByTestNo(testNo);
+    public TestRequestDto getRequestByTestNo(@PathVariable("testNo") String testNo) {
+        return testRequestServiceImpl.getRequestByTestNo(testNo);
     }
 
     @PostMapping
-    public void createRequest(@RequestBody TestVo testVo) {
-        testRequestServiceImpl.createRequest(testVo);
+    public String createRequest(@RequestBody TestRequestDto testRequestDto) {
+        testRequestServiceImpl.createRequest(testRequestDto);
+        return testRequestDto.getTestNo();
     }
 
     @PutMapping("/{testNo}")
-    public void updateRequest(@RequestBody TestVo testVo) {
-        testRequestServiceImpl.updateRequest(testVo);
+    public void updateRequest(@PathVariable("testNo") String testNo, @RequestBody TestRequestDto testRequestDto) {
+        testRequestDto.setTestNo(testNo);
+        testRequestServiceImpl.updateRequest(testRequestDto);
     }
 
     @DeleteMapping("/{testNo}")
-    public void deleteRequest(@RequestBody TestVo testVo) {
-        testRequestServiceImpl.deleteRequest(testVo);
+    public void deleteRequest(@PathVariable("testNo") String testNo) {
+        TestRequestDto testRequestDto = new TestRequestDto();
+        testRequestDto.setTestNo(testNo);
+        testRequestServiceImpl.deleteRequest(testRequestDto);
     }
 
     @PutMapping("/{testNo}/status")
-    public void updateRequestStatus(@RequestBody TestVo testVo) {
-        testRequestServiceImpl.updateRequestStatus(testVo);
+    public void updateStatusToReceipt(@PathVariable("testNo") String testNo, @RequestBody TestRequestDto testRequestDto) {
+        testRequestDto.setTestNo(testNo);
+        testRequestServiceImpl.updateStatusToReceipt(testRequestDto);
     }
 
 }

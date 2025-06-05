@@ -1,6 +1,6 @@
 package com.example.testminiproject.req.mapper;
 
-import com.example.testminiproject.req.vo.TestVo;
+import com.example.testminiproject.req.dto.TestRequestDto;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -8,10 +8,10 @@ import java.util.List;
 @Mapper
 public interface TestRequestMapper {
 
-    List<TestVo> findAllRequests();
-    TestVo findByTestNo(String testNo);
-    void insertRequest(TestVo testVo);
-    void updateRequest(TestVo testVo);
-    void deleteRequest(TestVo testVo);
-    void updateRequestStatus(TestVo testVo);
+    List<TestRequestDto> findAllRequests(TestRequestDto testRequestDto);
+    TestRequestDto findRequestByTestNo(String testNo);
+    void insertRequest(TestRequestDto testRequestDto);
+    void updateRequest(TestRequestDto testRequestDto);
+    void deleteRequest(TestRequestDto testRequestDto);
+
 }

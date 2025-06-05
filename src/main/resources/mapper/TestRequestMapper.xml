@@ -2,66 +2,99 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.testminiproject.req.mapper.TestRequestMapper">
 
-    <select id="findAllRequests" resultType="com.example.testminiproject.req.vo.TestVo">
+    <select id="findAllRequests" resultType="com.example.testminiproject.req.dto.TestRequestDto">
         SELECT
-            TEST_NO
-            , TITLE
-            , CONTENT
-            , NVL(MODIFY_USER_ID,CREATE_USER_ID)
-            , NVL(MODIFY_DATE,CREATE_DATE)
-        FROM TEST_REQUEST
+            TR.TEST_NO
+            , TR.TITLE
+            , TR.CONTENT
+            , TR.REQ_RMRK
+            , TR.REQ_DATE
+            , TR.REQ_ID
+            , U.USER_NAME
+            , TR.CREATE_DATE
+            , TR.CREATE_USER_ID
+            , TR.MODIFY_DATE
+            , TR.MODIFY_USER_ID
+        FROM TEST_REQUEST TR
+        LEFT JOIN USERS U ON U.USER_ID = TR.REQ_ID
+        WHERE TR.STATUS IN ('의뢰', '수정')
+        <if test="userName != null and userName != ''">
+            AND U.USER_NAME = #{userName}
+        </if>
+        <if test="title != null and title != ''">
+            AND TR.TITLE LIKE LIKE '%' || #{title} || '%'
+        </if>
+        <if test="reqStrDate != null and reqStrDate != ''">
+            AND TR.REQ_DATE <![CDATA[>=]]> #{reqStrDate}
+        </if>
+        <if test="reqEndDate != null and reqEndDate != ''">
+            AND TR.REQ_DATE <![CDATA[<=]]> #{reqEndDate}
+        </if>
+
     </select>
 
-    <select id="findByTestNo" parameterType="com.example.testminiproject.req.vo.TestVo" resultType="com.example.testminiproject.req.vo.TestVo">
+    <select id="findRequestByTestNo" parameterType="com.example.testminiproject.req.dto.TestRequestDto" resultType="com.example.testminiproject.req.dto.TestRequestDto">
         SELECT
-            TEST_NO
-             , TITLE
-             , CONTENT
-             , NVL(MODIFY_USER_ID,CREATE_USER_ID)
-             , NVL(MODIFY_DATE,CREATE_DATE)
-        FROM TEST_REQUEST
-        WHERE TEST_NO = #{testNo}
+            TR.TEST_NO
+             , TR.TITLE
+             , TR.CONTENT
+             , TR.REQ_RMRK
+             , TR.REQ_DATE
+             , TR.REQ_ID
+             , TR.CREATE_DATE
+             , TR.CREATE_USER_ID
+             , TR.MODIFY_DATE
+             , TR.MODIFY_USER_ID
+        FROM TEST_REQUEST TR
+        WHERE TR.STATUS IN ('의뢰', '수정')
+        AND TR.TEST_NO = #{testNo}
     </select>
 
-    <insert id="insertRequest" parameterType="com.example.testminiproject.req.vo.TestVo">
+    <insert id="insertRequest" parameterType="com.example.testminiproject.req.dto.TestRequestDto">
+        <selectKey keyProperty="testNo" resultType="String" order="BEFORE">
+            SELECT TO_CHAR(TEST_SEQ.NEXTVAL) FROM dual
+        </selectKey>
         INSERT INTO TEST_REQUEST(
             TITLE
+            , TEST_NO
             , CONTENT
+            , REQ_RMRK
+            , REQ_DATE
+            , REQ_ID
             , CREATE_DATE
             , CREATE_USER_ID
             , STATUS
         ) VALUES (
             #{title}
+            , #{testNo}
             , #{content}
+            , #{reqRmrk}
+            , SYSDATE
+            , #{reqId}
             , SYSDATE
             , #{createUserId}
             , #{status}
          )
     </insert>
 
-    <update id="updateRequest" parameterType="com.example.testminiproject.req.vo.TestVo">
+    <update id="updateRequest" parameterType="com.example.testminiproject.req.dto.TestRequestDto">
         UPDATE TEST_REQUEST SET
           TITLE              = #{title}
           , CONTENT          = #{content}
+          , REQ_RMRK         = #{reqRmrk}
           , MODIFY_DATE      = SYSDATE
           , MODIFY_USER_ID   = #{modifyUserId}
+          , STATUE           = #{status}
         WHERE TEST_NO = #{testNo}
     </update>
 
-    <update id="deleteRequest" parameterType="com.example.testminiproject.req.vo.TestVo">
+    <update id="deleteRequest" parameterType="com.example.testminiproject.req.dto.TestRequestDto">
         UPDATE TEST_REQUEST SET
-            DELETE_YN = #{deleteYn}
-          , DELETE_DATE      = SYSDATE
+          DELETE_DATE      = SYSDATE
           , DELETE_USER_ID   = #{deleteUserId}
+          , STATUS           = #{status}
         WHERE TEST_NO = #{testNo}
     </update>
 
-    <update id="updateRequestStatus" parameterType="com.example.testminiproject.req.vo.TestVo">
-        UPDATE TEST_REQUEST SET
-            STATUS = #{status}
-          , MODIFY_DATE      = SYSDATE
-          , MODIFY_USER_ID   = #{modifyUserId}
-        WHERE TEST_NO = #{testNo}
-    </update>
 
 </mapper>
