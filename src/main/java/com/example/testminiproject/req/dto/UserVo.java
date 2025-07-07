@@ -1,8 +1,8 @@
 package com.example.testminiproject.req.dto;
 
-import lombok.Data;
+import lombok.Getter;
 
-@Data
+@Getter
 public class UserVo {
 
     private String userId;

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.testminiproject.req.mapper.TestRequestMapper">
 
-    <select id="findAllRequests" resultType="com.example.testminiproject.req.dto.TestRequestDto">
+    <select id="findAllRequests" parameterType="com.example.testminiproject.req.dto.TestRequestSearchDto" resultType="com.example.testminiproject.req.dto.TestRequestSearchDto">
         SELECT
             TR.TEST_NO
             , TR.TITLE
@@ -17,7 +17,7 @@
             , TR.MODIFY_USER_ID
         FROM TEST_REQUEST TR
         LEFT JOIN USERS U ON U.USER_ID = TR.REQ_ID
-        WHERE TR.STATUS IN ('의뢰', '수정')
+        WHERE 1=1
         <if test="userName != null and userName != ''">
             AND U.USER_NAME = #{userName}
         </if>
@@ -33,7 +33,7 @@
 
     </select>
 
-    <select id="findRequestByTestNo" parameterType="com.example.testminiproject.req.dto.TestRequestDto" resultType="com.example.testminiproject.req.dto.TestRequestDto">
+    <select id="findRequestByTestNo" parameterType="String" resultType="com.example.testminiproject.req.dto.TestRequestSearchDto">
         SELECT
             TR.TEST_NO
              , TR.TITLE
@@ -46,53 +46,48 @@
              , TR.MODIFY_DATE
              , TR.MODIFY_USER_ID
         FROM TEST_REQUEST TR
-        WHERE TR.STATUS IN ('의뢰', '수정')
-        AND TR.TEST_NO = #{testNo}
+        WHERE TR.TEST_NO = #{testNo}
     </select>
 
-    <insert id="insertRequest" parameterType="com.example.testminiproject.req.dto.TestRequestDto">
+    <insert id="insertRequest" parameterType="com.example.testminiproject.req.dto.TestRequestCreateDto">
         <selectKey keyProperty="testNo" resultType="String" order="BEFORE">
             SELECT TO_CHAR(TEST_SEQ.NEXTVAL) FROM dual
         </selectKey>
         INSERT INTO TEST_REQUEST(
-            TITLE
-            , TEST_NO
+            TEST_NO
+            , TITLE
             , CONTENT
             , REQ_RMRK
             , REQ_DATE
             , REQ_ID
             , CREATE_DATE
             , CREATE_USER_ID
-            , STATUS
         ) VALUES (
-            #{title}
-            , #{testNo}
+            #{testNo}
+            , #{title}
             , #{content}
             , #{reqRmrk}
             , SYSDATE
             , #{reqId}
             , SYSDATE
             , #{createUserId}
-            , #{status}
          )
     </insert>
 
-    <update id="updateRequest" parameterType="com.example.testminiproject.req.dto.TestRequestDto">
+    <update id="updateRequest" parameterType="com.example.testminiproject.req.dto.TestRequestUpdateDto">
         UPDATE TEST_REQUEST SET
           TITLE              = #{title}
           , CONTENT          = #{content}
           , REQ_RMRK         = #{reqRmrk}
           , MODIFY_DATE      = SYSDATE
           , MODIFY_USER_ID   = #{modifyUserId}
-          , STATUE           = #{status}
         WHERE TEST_NO = #{testNo}
     </update>
 
-    <update id="deleteRequest" parameterType="com.example.testminiproject.req.dto.TestRequestDto">
+    <update id="deleteRequest" parameterType="com.example.testminiproject.req.dto.TestRequestDeleteDto">
         UPDATE TEST_REQUEST SET
           DELETE_DATE      = SYSDATE
           , DELETE_USER_ID   = #{deleteUserId}
-          , STATUS           = #{status}
         WHERE TEST_NO = #{testNo}
     </update>
 

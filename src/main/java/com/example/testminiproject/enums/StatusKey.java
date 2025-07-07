@@ -3,6 +3,13 @@ package com.example.testminiproject.enums;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+
+/*
+* enum
+*
+*
+* */
+
 @Getter
 @AllArgsConstructor
 public enum StatusKey {

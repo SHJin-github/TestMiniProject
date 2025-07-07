@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.testminiproject.rec.mapper.TestReceiptMapper">
 
-    <insert id="insertReceipt" parameterType="com.example.testminiproject.rec.dto.TestReceiptDto">
+    <insert id="insertReceipt" parameterType="com.example.testminiproject.rec.dto.TestReceiptCreateDto">
         <selectKey keyProperty="receiptNo" resultType="String" order="BEFORE">
             SELECT TO_CHAR(RECEIPT_SEQ.NEXTVAL) FROM dual
         </selectKey>
@@ -16,7 +16,6 @@
         , REC_ID
         , CREATE_DATE
         , CREATE_USER_ID
-        , STATUS
         ) VALUES (
         #{receiptNo}
         , #{testNo}
@@ -27,7 +26,6 @@
         , #{recId}
         , SYSDATE
         , #{createUserId}
-        , #{status}
         )
     </insert>
 

@@ -1,11 +1,10 @@
 package com.example.testminiproject.req.service.impl;
 
-import com.example.testminiproject.enums.StatusKey;
-import com.example.testminiproject.rec.dto.TestReceiptDto;
+import com.example.testminiproject.rec.dto.TestReceiptCreateDto;
 import com.example.testminiproject.rec.service.TestReceiptService;
+import com.example.testminiproject.req.dto.*;
 import com.example.testminiproject.req.mapper.TestRequestMapper;
 import com.example.testminiproject.req.service.TestRequestService;
-import com.example.testminiproject.req.dto.TestRequestDto;
 import com.example.testminiproject.util.GetUserSession;
 import org.springframework.stereotype.Service;
 
@@ -24,39 +23,35 @@ public class TestRequestServiceImpl implements TestRequestService {
     }
 
     @Override
-    public List<TestRequestDto> getAllRequests(TestRequestDto testRequestDto) {
-        return testRequestMapper.findAllRequests(testRequestDto);
+    public List<TestRequestSearchDto> getAllRequests(TestRequestSearchDto searchDto) {
+        return testRequestMapper.findAllRequests(searchDto);
     }
 
     @Override
-    public TestRequestDto getRequestByTestNo(String testNo) {
+    public TestRequestSearchDto getRequestByTestNo(String testNo) {
         return testRequestMapper.findRequestByTestNo(testNo);
     }
 
     @Override
-    public void createRequest(TestRequestDto testRequestDto) {
-        testRequestDto.markAsCreated(getUserId());
-        testRequestMapper.insertRequest(testRequestDto);
+    public void createRequest(TestRequestCreateDto createDto) {
+        testRequestMapper.insertRequest(createDto);
     }
 
     @Override
-    public void updateRequest(TestRequestDto testRequestDto) {
-        testRequestDto.markAsUpdated(getUserId());
-        testRequestMapper.updateRequest(testRequestDto);
+    public void updateRequest(TestRequestUpdateDto updateDto) {
+        testRequestMapper.updateRequest(updateDto);
     }
 
     @Override
-    public void deleteRequest(TestRequestDto testRequestDto) {
-        testRequestDto.markAsDeleted(getUserId());
-        testRequestMapper.deleteRequest(testRequestDto);
+    public void deleteRequest(TestRequestDeleteDto deleteDto) {
+        testRequestMapper.deleteRequest(deleteDto);
     }
 
     @Override
-    public void updateStatusToReceipt(TestRequestDto testRequestDto) {
-        testRequestDto.markAsReceipt(getUserId());
-        testRequestMapper.updateRequest(testRequestDto);
-        TestReceiptDto testReceiptDto = TestReceiptDto.markAsCreated(getUserId(), testRequestDto);
-        testReceiptServiceImpl.createReceipt(testReceiptDto);
+    public void updateToReceipt(TestRequestUpdateDto updateDto) {
+        testRequestMapper.updateRequest(updateDto);
+        TestReceiptCreateDto createDto = TestReceiptCreateDto.markAsCreated(getUserId(), updateDto);
+        testReceiptServiceImpl.createReceipt(createDto);
     }
 
     private String getUserId() {

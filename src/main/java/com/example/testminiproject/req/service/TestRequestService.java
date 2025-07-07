@@ -1,16 +1,16 @@
 package com.example.testminiproject.req.service;
 
-import com.example.testminiproject.req.dto.TestRequestDto;
+import com.example.testminiproject.req.dto.*;
 
 import java.util.List;
 
 public interface TestRequestService {
 
-    List<TestRequestDto> getAllRequests(TestRequestDto testRequestDto);
-    TestRequestDto getRequestByTestNo(String testNo);
-    void createRequest(TestRequestDto testRequestDto);
-    void updateRequest(TestRequestDto testRequestDto);
-    void deleteRequest(TestRequestDto testRequestDto);
-    void updateStatusToReceipt(TestRequestDto testRequestDto);
+    List<TestRequestSearchDto> getAllRequests(TestRequestSearchDto searchDto);
+    TestRequestSearchDto getRequestByTestNo(String testNo);
+    void createRequest(TestRequestCreateDto createDto);
+    void updateRequest(TestRequestUpdateDto updateDto);
+    void deleteRequest(TestRequestDeleteDto deleteDto);
+    void updateToReceipt(TestRequestUpdateDto updateDto);
 
 }
