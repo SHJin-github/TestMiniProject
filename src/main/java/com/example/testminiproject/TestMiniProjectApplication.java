@@ -9,7 +9,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import javax.sql.DataSource;
 
 @SpringBootApplication
-public class TestMiniProjectApplication implements CommandLineRunner {
+public class TestMiniProjectApplication {
 
     @Autowired
     private DataSource dataSource;
@@ -18,12 +18,4 @@ public class TestMiniProjectApplication implements CommandLineRunner {
         SpringApplication.run(TestMiniProjectApplication.class, args);
     }
 
-    @Override
-    public void run(String... args) throws Exception {
-        if (dataSource != null) {
-            System.out.println("DataSource 연결 성공!");
-        } else {
-            System.err.println("DataSource 연결 실패!");
-        }
-    }
 }

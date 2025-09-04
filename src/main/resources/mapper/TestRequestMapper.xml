@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.testminiproject.req.mapper.TestRequestMapper">
+
+    <select id="findAllRequests" parameterType="com.example.testminiproject.req.dto.TestRequestSearchDto" resultType="com.example.testminiproject.req.dto.TestRequestSearchDto">
+        SELECT
+            TR.TEST_NO
+            , TR.TITLE
+            , TR.CONTENT
+            , TR.REQ_RMRK
+            , TR.REQ_DATE
+            , TR.REQ_ID
+            , U.USER_NAME
+            , TR.CREATE_DATE
+            , TR.CREATE_USER_ID
+            , TR.MODIFY_DATE
+            , TR.MODIFY_USER_ID
+        FROM TEST_REQUEST TR
+        LEFT JOIN USERS U ON U.USER_ID = TR.REQ_ID
+        WHERE 1=1
+        <if test="userName != null and userName != ''">
+            AND U.USER_NAME = #{userName}
+        </if>
+        <if test="title != null and title != ''">
+            AND TR.TITLE LIKE LIKE '%' || #{title} || '%'
+        </if>
+        <if test="reqStrDate != null and reqStrDate != ''">
+            AND TR.REQ_DATE <![CDATA[>=]]> #{reqStrDate}
+        </if>
+        <if test="reqEndDate != null and reqEndDate != ''">
+            AND TR.REQ_DATE <![CDATA[<=]]> #{reqEndDate}
+        </if>
+
+    </select>
+
+    <select id="findRequestByTestNo" parameterType="String" resultType="com.example.testminiproject.req.dto.TestRequestSearchDto">
+        SELECT
+            TR.TEST_NO
+             , TR.TITLE
+             , TR.CONTENT
+             , TR.REQ_RMRK
+             , TR.REQ_DATE
+             , TR.REQ_ID
+             , TR.CREATE_DATE
+             , TR.CREATE_USER_ID
+             , TR.MODIFY_DATE
+             , TR.MODIFY_USER_ID
+        FROM TEST_REQUEST TR
+        WHERE TR.TEST_NO = #{testNo}
+    </select>
+
+    <insert id="insertRequest" parameterType="com.example.testminiproject.req.dto.TestRequestCreateDto">
+        <selectKey keyProperty="testNo" resultType="String" order="BEFORE">
+            SELECT TO_CHAR(TEST_SEQ.NEXTVAL) FROM dual
+        </selectKey>
+        INSERT INTO TEST_REQUEST(
+            TEST_NO
+            , TITLE
+            , CONTENT
+            , REQ_RMRK
+            , REQ_DATE
+            , REQ_ID
+            , CREATE_DATE
+            , CREATE_USER_ID
+        ) VALUES (
+            #{testNo}
+            , #{title}
+            , #{content}
+            , #{reqRmrk}
+            , SYSDATE
+            , #{reqId}
+            , SYSDATE
+            , #{createUserId}
+         )
+    </insert>
+
+    <update id="updateRequest" parameterType="com.example.testminiproject.req.dto.TestRequestUpdateDto">
+        UPDATE TEST_REQUEST SET
+          TITLE              = #{title}
+          , CONTENT          = #{content}
+          , REQ_RMRK         = #{reqRmrk}
+          , MODIFY_DATE      = SYSDATE
+          , MODIFY_USER_ID   = #{modifyUserId}
+        WHERE TEST_NO = #{testNo}
+    </update>
+
+    <update id="deleteRequest" parameterType="com.example.testminiproject.req.dto.TestRequestDeleteDto">
+        UPDATE TEST_REQUEST SET
+          DELETE_DATE      = SYSDATE
+          , DELETE_USER_ID   = #{deleteUserId}
+        WHERE TEST_NO = #{testNo}
+    </update>
+
+
+</mapper>
